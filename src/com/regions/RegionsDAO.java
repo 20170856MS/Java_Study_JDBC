@@ -56,7 +56,7 @@ public class RegionsDAO {
 		ResultSet rs = st.executeQuery();
 		
 		if(rs.next()) {
-			
+			regionDTO = new RegionDTO();
 			int rId = rs.getInt(1);
 			regionDTO.setRegion_id(rId);
 			String rName = rs.getString(2);

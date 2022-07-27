@@ -19,8 +19,7 @@ public class TestMain {
 		RegionsView regionsView = new RegionsView();
 		
 		try {
-			//regionsDAO.getList();
-			//regionsDAO.getDetail(2);
+
 			RegionDTO regionDTO = regionsDAO.getDetail(2);
 			regionsView.View(regionDTO);
 			
@@ -36,7 +35,7 @@ public class TestMain {
 		CountriesDAO countriesDAO = new CountriesDAO();
 		CountriesView countriesView = new CountriesView();
 		try {
-			//countriesDAO.getList();
+
 			CountriesDTO countriesDTO = countriesDAO.getDetail("AU");
 			countriesView.View(countriesDTO);
 			
