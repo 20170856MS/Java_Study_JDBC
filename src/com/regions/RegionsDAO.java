@@ -3,15 +3,17 @@ package com.regions;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.util.DBConnector;
 
 public class RegionsDAO {
 	
 	//1. Regions 테이블의 모든 데이터 가져오기
-	
-	public void getList() throws Exception {
+	public ArrayList<RegionDTO> getList() throws Exception {
+		ArrayList<RegionDTO> ar = new ArrayList();
 		//1.DB 연결
+		
 		Connection con = DBConnector.getConnection();
 		
 		//2.Query문 작성
@@ -24,17 +26,47 @@ public class RegionsDAO {
 		
 		//5. 최종 전송 후 결과처리
 		ResultSet rs = st.executeQuery();
-		
 		while(rs.next()) {
-			int id = rs.getInt("Region_id");
-			String name = rs.getString("Region_name");
-			System.out.println(id);
-			System.out.println(name);
-			
+			RegionDTO regionDTO = new RegionDTO();
+			regionDTO.setRegion_id(rs.getInt("Region_id"));
+			regionDTO.setRegion_name(rs.getString("Region_name"));
+			ar.add(regionDTO);
 		}
 		
+		//6. 자원해제
+		DBConnector.disConect(rs, st, con);
 		
+		return ar;
 	}
 	
+	
+	//2. Regions에서 하나의 결과
+	public RegionDTO getDetail(int region_id) throws Exception{
+		RegionDTO regionDTO = null;
+		//1.DB 연결
+		Connection con = DBConnector.getConnection();
+		//2.Query문 작성
+		String sql = "SELECT * FROM REGIONS WHERE REGION_ID = ?";
+		//3.미리 전송
+		PreparedStatement st = con.prepareStatement(sql);
+		//4. ?값 세팅
+		// WHERE NUM BETEEN ?(1) AND ?(2);
+		st.setInt(1, region_id);
+		//5. 최종 전송후 결과처리
+		ResultSet rs = st.executeQuery();
+		
+		if(rs.next()) {
+			
+			int rId = rs.getInt(1);
+			regionDTO.setRegion_id(rId);
+			String rName = rs.getString(2);
+			regionDTO.setRegion_name(rs.getString(2));
+
+		}
+		//6. 자원해제
+		DBConnector.disConect(rs, st, con);
+		
+		return regionDTO;
+	}
 
 }
