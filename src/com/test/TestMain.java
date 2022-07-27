@@ -3,6 +3,8 @@ package com.test;
 import java.util.ArrayList;
 
 import com.countries.CountriesDAO;
+import com.countries.CountriesDTO;
+import com.countries.CountriesView;
 import com.regions.RegionDTO;
 import com.regions.RegionsDAO;
 import com.regions.RegionsView;
@@ -32,9 +34,15 @@ public class TestMain {
 		//========================================================
 		
 		CountriesDAO countriesDAO = new CountriesDAO();
+		CountriesView countriesView = new CountriesView();
 		try {
 			//countriesDAO.getList();
-			countriesDAO.getDetail("AU");
+			CountriesDTO countriesDTO = countriesDAO.getDetail("AU");
+			countriesView.View(countriesDTO);
+			
+			ArrayList<CountriesDTO> ar = countriesDAO.getList();
+			countriesView.View(ar);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
