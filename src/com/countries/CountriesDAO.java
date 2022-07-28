@@ -9,17 +9,40 @@ import com.util.DBConnector;
 
 public class CountriesDAO {
 
+	//setCountry
+	public int setCountry (CountriesDTO countriesDTO) throws Exception{
+		//1.DB연결
+		Connection con = DBConnector.getConnection();
+		//2.sql문 작성
+		String sql = "INSERT INTO COUNTRIES VALUES (?,?,?)";
+		//3.미리 전송
+		PreparedStatement st = con.prepareStatement(sql);
+		//4.?있으면 값 세팅
+		st.setString(1, countriesDTO.getCountry_id());
+		st.setString(2, countriesDTO.getCountry_name());
+		st.setInt(3, countriesDTO.getRegion_id());
+		//5.최종전송 후 결과처리
+		int result = st.executeUpdate();
+		//6.자원해제
+		DBConnector.disConect(st, con);
+		
+		return result;
+	}
 	
-	public ArrayList<CountriesDTO> getList() throws Exception {
+	
+	public ArrayList<CountriesDTO> getList(String search) throws Exception {
 		//1.DB 연결
 		ArrayList<CountriesDTO> ar = new ArrayList<>();
 		Connection con = DBConnector.getConnection();
 				
 		//2.Query문 작성
-		String sql = "SELECT * FROM COUNTRIES";
+		String sql = "SELECT * FROM COUNTRIES WHERE COUNTRY_NAME LIKE '%'||?||'%' ";
 				
 		//3. Query문 미리 전송
 		PreparedStatement st = con.prepareStatement(sql);
+		
+		//?있으면 값 세팅
+		st.setString(1, "%"+search+"%");
 		
 		//4.
 		
