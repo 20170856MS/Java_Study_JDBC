@@ -44,7 +44,7 @@ public class TestMain {
 		//========================================================
 	
 		CountriesDAO countriesDAO = new CountriesDAO();
-		CountriesView countriesView = new CountriesView();
+		CountriesView countriesView = new CountriesView();{
 		try {
 
 			//CountriesDTO countriesDTO = countriesDAO.getDetail("AU");
@@ -73,7 +73,7 @@ public class TestMain {
 			//employeesDAO.getSalaryInfo();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		
 	}
